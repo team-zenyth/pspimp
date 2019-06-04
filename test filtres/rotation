@@ -1,0 +1,25 @@
+function negatifImg(image)
+ local width, height = image:width(), image:height()
+ local surface = Image.createEmpty(height,width)
+ local img_pixel, colors, color = 0, 0, 0
+ for i = 1, width do
+  for j = 1, height do
+   img_pixel = image:pixel(i-1, j-1)
+   colors = img_pixel:colors()
+   color = Color.new(colors.r,colors.g,colors.b,colors.a)
+   surface:pixel(j-1,i-1, color)
+  end
+ end
+ return surface
+end
+
+local img = negatifImg(Image.load("icone.png"))
+
+while true do
+    screen:clear()
+   
+    screen:blit(0, 0, img)
+   
+    screen.waitVblankStart()
+    screen.flip()
+end
